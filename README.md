@@ -37,8 +37,8 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 Before running the application, you must set up the required data files.
 
-1.  Ensure you have a directory named `PMS/` inside the `Management_System` folder.
-2.  Create the following empty files inside the `PMS/` directory:
+1.  Ensure you have a directory named `MS/` inside the `Management_System` folder.
+2.  Create the following empty files inside the `MS/` directory:
     * `admins.txt`
     * `logs.txt`
     * `products.txt`
