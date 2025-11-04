@@ -13,19 +13,24 @@ while True:
                 user_choice = input("Please choose an option: ")
 
                 if user_choice == "1":
+                    functions.add_logout_entry(username)
                     functions.quit_session(username)
                     break
 
     elif choice == "2": # Admin Login
-        admin_name = functions.admin_login()
-        if admin_name:
+        username = functions.admin_login()
+        if username:
             while True:
                 print("\n--- Admin Panel ---")
-                print("1. Logout to Main Menu")
+                print("1. List logs-reset logs")
+                print("2. Logout to Main Menu")
                 admin_choice = input("Please choose an option: ")
 
                 if admin_choice == "1":
-                    functions.quit_session(admin_name)
+                    functions.list_and_reset_logs()
+                if admin_choice == "2":
+                    functions.add_logout_entry(username)
+                    functions.quit_session(username)
                     break
 
     elif choice == "3": # Quit
