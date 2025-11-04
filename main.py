@@ -29,7 +29,7 @@ while True:
         username = functions.admin_login()
         if username:# Admin logged in successfully
             while True:# Admin Panel
-                print("\n--- User Panel  ---"
+                print("\n--- Admin Panel  ---"
                       "\n1. Log List and Reset"
                       "\n2. Add New User"
                       "\n3. List Users"

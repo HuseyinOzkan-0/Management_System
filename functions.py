@@ -1,16 +1,16 @@
 import os #To handle file paths and directories
 from datetime import datetime #To write log dates and times
 
-#To print main menu and continue to next menu(Ayşenur)
+#To print main menu and continue to next menu
 def main_menu():
-    print("\n----Main Menu----")
-    print("1. User Login")
-    print("2. Admin Login")
-    print("3. Quit")
+    print("\n----Main Menu----" \
+          "\n1. User Login" \
+          "\n2. Admin Login" \
+          "\n3. Quit")
     selection = input("Please select an option: ")
     return selection
 
-#To login as a user and check for password and username(Ayşenur)
+#To login as a user and check for password and username
 def user_login():
     username=input("Enter your username: ").lower()
     password=input("Enter your password: ")
@@ -29,7 +29,7 @@ def user_login():
     except FileNotFoundError:
         print("Error: 'MS/users.txt' file not found")
 
-#To login as a admin and check for password and usernmae(Ayşenur)
+#To login as a admin and check for password and usernmae
 def admin_login():
     username=input("Enter your username: ").lower()
     password= input("Enter your password: ").lower()
@@ -47,26 +47,26 @@ def admin_login():
     except FileNotFoundError:
         print("Error: 'MS/admins.txt' file not found")
 
-#To quit seesion for both user and admin(Ayşenur)
+#To quit seesion for both user and admin
 def quit_session(username):
     if username:
         print(f"----{username} has logged out successfully.----")
     else:
         print("Quitting the program. Goodbye!")
 
-#To add log entry when user or admin logs in(Kadir)
+#To add log entry when user or admin logs in
 def add_log_entry(username):
     with open("MS/logs.txt", "a", encoding="utf8") as log:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log.write(f"{timestamp} - {username} logged in.\n")
 
-#To add log entry when user or admin logs out(Kadir)
+#To add log entry when user or admin logs out
 def add_logout_entry(username):
     with open("MS/logs.txt", "a", encoding="utf8") as log:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log.write(f"{timestamp} - {username} logged out.\n")
 
-#To list logs and reset them as admin(Kadir)
+#To list logs and reset them as admin
 def list_and_reset_logs(username):
     clear_terminal()
     print("\n--- System Logs ---")
@@ -87,7 +87,7 @@ def list_and_reset_logs(username):
             file.write(f"Logs have been reseted by {username}.\n")
         print("System logs have been reset.")
 
-#To add or remove products as user(Atilla)
+#To add or remove products as user
 def add_or_remove_product():
     product_name = input("Enter product name (alphabetic characters only): ").lower()
 
@@ -143,7 +143,7 @@ def add_or_remove_product():
     if new_stock == 0:
         print(f"Stock for '{product_name}' is now zero and it has been removed from the list.")
 
-#To list products as user(Atilla)
+#To list products as user
 def list_products():
     clear_terminal()
     print("\n--- Product List ---")
@@ -157,11 +157,11 @@ def list_products():
     except FileNotFoundError:
         print("No products have been added yet.")
 
-#To clear terminal screen(Atilla)
+#To clear terminal screen
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-#To add new users as admin(Mustafa)
+#To add new users as admin
 def add_new_user():
     username = input("Enter a new username (alphabetic characters only): ").lower()
     if not username.isalpha():
@@ -185,7 +185,7 @@ def add_new_user():
         file.write(f"{username}-{password}\n")
     print(f"User '{username}' was added successfully.")
 
-#To list users as admin(Mustafa)
+#To list users as admin
 def list_users():
     clear_terminal()
     print("\n--- User List ---")
@@ -199,7 +199,7 @@ def list_users():
     except FileNotFoundError:
         print("No registered users found.")
 
-#To remove users as admin(Mustafa)
+#To remove users as admin
 def remove_users():
     username_to_remove = input("Enter the username of the user to remove: ")
     try:
@@ -221,7 +221,7 @@ def remove_users():
     except FileNotFoundError:
         print("No registered users found.")
 
-#To add new admins as admin(Hüseyin)
+#To add new admins as admin
 def add_new_admin():
     admin_name = input("Enter new admin username (alphabetic characters only): ").lower()
     if not admin_name.isalpha():
@@ -245,7 +245,7 @@ def add_new_admin():
         file.write(f"{admin_name}-{admin_password}\n")
     print(f"Admin '{admin_name}' added successfully.")
 
-#To list admins as admin(Hüseyin)
+#To list admins as admin
 def list_admins():
     print("\n--- Admin List ---")
     try:
@@ -258,7 +258,7 @@ def list_admins():
     except FileNotFoundError:
         print("No registered admins found.")
 
-#To remove admins as admin(Hüseyin)
+#To remove admins as admin
 def remove_admin():
     admin_to_remove = input("Enter the username of the admin to remove: ")
     try:
