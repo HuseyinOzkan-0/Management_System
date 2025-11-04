@@ -22,6 +22,7 @@ def user_login():
                     correct_username, correct_password = parts
                     if username == correct_username and password == correct_password:
                         add_log_entry(username)
+                        clear_terminal()
                         print(f"----Welcome {username} !----")
                         return username
         print("Incorrect username or password")
@@ -66,6 +67,8 @@ def add_logout_entry(username):
         log.write(f"{timestamp} - {username} logged out.\n")
 
 #To list logs and reset them as admin(Kadir)
+def list_and_reset_logs(username):
+    clear_terminal()
     print("\n--- System Logs ---")
     try:
         with open("PMS/logs.txt", "r", encoding="utf8") as file:
@@ -76,6 +79,7 @@ def add_logout_entry(username):
                 print(log.strip())
     except FileNotFoundError:
         print("Log file not found.")
+    
     reset_choice = input("\nDo you want to reset the logs? (y/n): ")
     if reset_choice.lower() == 'y':
         with open("PMS/logs.txt", "w", encoding="utf8") as file:
@@ -152,3 +156,49 @@ def list_products():
 #To clear terminal screen(Atilla)
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+#To add new user as admin(Mustafa)
+def add_new_user():
+    username = input("Enter a new username: ")
+    password = input("Enter a new password for the user: ")
+    with open("PMS/Users.txt", "a", encoding="utf8") as file:
+        file.write(f"{username}-{password}\n")
+    print(f"User '{username}' was added successfully.")
+
+#To list users as admin(Mustafa)
+def list_users():
+    clear_terminal()
+    print("\n--- User List ---")
+    try:
+        with open("PMS/Users.txt", "r", encoding="utf8") as file:
+            users = file.readlines()
+            if not users:
+                print("No users found.")
+            for user in users:
+                print(user.strip().split('-')[0]) # Only show username
+    except FileNotFoundError:
+        print("No registered users found.")
+
+#To remove users as admin(Mustafa)
+def remove_users():
+    username_to_remove = input("Enter the username of the user to remove: ")
+    try:
+        with open("PMS/Users.txt", "r", encoding="utf8") as file:
+            users = file.readlines()
+        
+        user_found = False
+        with open("PMS/Users.txt", "w", encoding="utf8") as file:
+            for user in users:
+                if user.strip().split("-")[0] != username_to_remove:
+                    file.write(user)
+                else:
+                    user_found = True
+        
+        if user_found:
+            print(f"User '{username_to_remove}' was removed successfully.")
+            clear_terminal()
+        else:
+            print(f"User '{username_to_remove}' not found.") # Bug fix: f-string typo
+    except FileNotFoundError:
+        print("No registered users found.")
+
