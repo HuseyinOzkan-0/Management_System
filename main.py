@@ -1,70 +1,89 @@
-import functions #Importing functions module
-import os #To handle file paths and directories
-os.makedirs("MS", exist_ok=True) #Check MS directory exists
+import functions  # Importing functions module
+import os         # To handle file paths and directories
 
-while True:
-    choice = functions.main_menu() #Main Menu
-    if choice == "1":# User Login
-        username = functions.user_login()
-        if username:# User logged in successfully
-            while True:# User Panel
-                print("\n--- User Panel  ---"
-                      "\n1. Add or Remove Product Stock"
-                      "\n2. List Products"
-                      "\n3. Clear Terminal"
-                      "\n4. Logout to Main Menu")
-                user_choice = input("Please choose an option: ")
-                if user_choice == "1":#add or remove product stock
-                    functions.add_or_remove_product()
-                elif user_choice == "2":#list products
-                    functions.list_products()
-                elif user_choice == "3":#clear terminal
-                    functions.clear_terminal()
-                elif user_choice == "4":# Logout to Main Menu
-                    functions.clear_terminal()
-                    functions.add_logout_entry(username)
-                    functions.quit_session(username)
-                    break
-    elif choice == "2": # Admin Login
-        username = functions.admin_login()
-        if username:# Admin logged in successfully
-            while True:# Admin Panel
-                print("\n--- Admin Panel  ---"
-                      "\n1. Log List and Reset"
-                      "\n2. Add New User"
-                      "\n3. List Users"
-                      "\n4. remove User"
-                      "\n5. Add New Admin"
-                      "\n6. List Admins"
-                      "\n7. Remove Admin"
-                      "\n8. Clear Terminal"
-                      "\n9. Logout to Main Menu")
-                admin_choice = input("Please choose an option: ")
-                if admin_choice == "1":#Log list and reset
-                    functions.list_and_reset_logs(username)
-                elif admin_choice == "2":#To add new user as admin
-                    functions.add_new_user
-                elif admin_choice == "3":#To list users as admin
-                    functions.list_users()
-                elif admin_choice == "4":#To remove user as admin
-                    functions.list_users()
-                    functions.remove_users()
-                elif admin_choice == "5":#To add new admin as admin
-                    functions.add_new_admin()
-                elif admin_choice == "6":#To list admins as admin
-                    functions.list_admins()
-                elif admin_choice == "7":#To remove admin as admin
-                    functions.list_admins()
-                    functions.remove_admin()
-                elif admin_choice == "8":# Clear terminal
-                    functions.clear_terminal()
-                elif admin_choice == "9":# Logout to Main Menu
-                    functions.add_logout_entry(username)
-                    functions.quit_session(username)
-                    break
-    elif choice == "3": # Quit
-        functions.clear_terminal()
-        print("Quitting the program. Goodbye!")
-        break
-    else: # Invalid option
-        print("Invalid option. Please try again.")
+def handle_user_panel(username):
+    user_actions = {
+        "1": functions.add_or_remove_product,
+        "2": functions.list_products,
+        "3": functions.clear_terminal,
+    }
+    while True:
+        print("""
+--- User Panel ---
+1. Add or Remove Product Stock
+2. List Products
+3. Clear Terminal
+4. Logout to Main Menu""")
+        choice = input("Please choose an option: ")
+        if choice in user_actions:
+            user_actions[choice]()
+        elif choice == "4":
+            functions.clear_terminal()
+            functions.add_logout_entry(username)
+            functions.quit_session(username)
+            print(f"Logging out {username}...")
+            break  # Exit the user panel loop
+        else:
+            print("Invalid option. Please try again.")
+
+def handle_admin_panel(username):
+    admin_actions = {
+        "2": functions.add_new_user,    
+        "3": functions.list_users,
+        "5": functions.add_new_admin,   
+        "6": functions.list_admins,
+        "8": functions.clear_terminal,
+    }
+    while True:
+        print("""
+--- Admin Panel ---
+1. Log List and Reset
+2. Add New User
+3. List Users
+4. Remove User
+5. Add New Admin
+6. List Admins
+7. Remove Admin
+8. Clear Terminal
+9. Logout to Main Menu""")
+        admin_choice = input("Please choose an option: ")
+        if admin_choice in admin_actions:
+            admin_actions[admin_choice]()
+        elif admin_choice == "1":
+            functions.list_and_reset_logs(username)
+        elif admin_choice == "4":
+            functions.list_users()      
+            functions.remove_users()
+        elif admin_choice == "7":
+            functions.list_admins()     
+            functions.remove_admin()
+        elif admin_choice == "9":
+            functions.clear_terminal()
+            functions.add_logout_entry(username)
+            functions.quit_session(username)
+            print(f"Logging out {username}...")
+            break  # Exit the admin panel loop
+        else:
+            print("Invalid option. Please try again.")
+
+def main():
+    os.makedirs("MS", exist_ok=True)
+    while True:
+        choice = functions.main_menu()
+        if choice == "1":  # User Login
+            username = functions.user_login()
+            if username:  # User logged in successfully
+                handle_user_panel(username)  # <-- Cleaner!
+        elif choice == "2":  # Admin Login
+            username = functions.admin_login()
+            if username:  # Admin logged in successfully
+                handle_admin_panel(username)  # <-- Cleaner!
+        elif choice == "3":  # Quit
+            functions.clear_terminal()
+            print("Quitting the program. Goodbye!")
+            break  # Exit the main application loop
+        else:  # Invalid option
+            print("Invalid option. Please try again.")
+
+if __name__ == "__main__":
+    main()
