@@ -15,7 +15,7 @@ def user_login():
     username=input("Enter your username: ").lower()
     password=input("Enter your password: ")
     try:
-        with open("PMS/users.txt", "r",encoding="utf8") as user:
+        with open("MS/users.txt", "r",encoding="utf8") as user:
             for line in user:
                 parts=line.strip().split("-")
                 if len(parts)==2:
@@ -27,14 +27,14 @@ def user_login():
                         return username
         print("Incorrect username or password")
     except FileNotFoundError:
-        print("Error: 'PMS/users.txt' file not found")
+        print("Error: 'MS/users.txt' file not found")
 
 #To login as a admin and check for password and usernmae(Ayşenur)
 def admin_login():
     username=input("Enter your username: ").lower()
     password= input("Enter your password: ").lower()
     try:
-        with open("PMS/admins.txt", "r",encoding="utf8") as admin:
+        with open("MS/admins.txt", "r",encoding="utf8") as admin:
             for line in admin:
                 parts=line.strip().split("-")
                 if len(parts)==2:
@@ -45,7 +45,7 @@ def admin_login():
                         return username
         print("Incorrect username or password")
     except FileNotFoundError:
-        print("Error: 'PMS/admins.txt' file not found")
+        print("Error: 'MS/admins.txt' file not found")
 
 #To quit seesion for both user and admin(Ayşenur)
 def quit_session(username):
@@ -56,13 +56,13 @@ def quit_session(username):
 
 #To add log entry when user or admin logs in(Kadir)
 def add_log_entry(username):
-    with open("PMS/logs.txt", "a", encoding="utf8") as log:
+    with open("MS/logs.txt", "a", encoding="utf8") as log:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log.write(f"{timestamp} - {username} logged in.\n")
 
 #To add log entry when user or admin logs out(Kadir)
 def add_logout_entry(username):
-    with open("PMS/logs.txt", "a", encoding="utf8") as log:
+    with open("MS/logs.txt", "a", encoding="utf8") as log:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log.write(f"{timestamp} - {username} logged out.\n")
 
@@ -71,7 +71,7 @@ def list_and_reset_logs(username):
     clear_terminal()
     print("\n--- System Logs ---")
     try:
-        with open("PMS/logs.txt", "r", encoding="utf8") as file:
+        with open("MS/logs.txt", "r", encoding="utf8") as file:
             logs = file.readlines()
             if not logs:
                 print("No log entries found.")
@@ -82,7 +82,7 @@ def list_and_reset_logs(username):
     
     reset_choice = input("\nDo you want to reset the logs? (y/n): ")
     if reset_choice.lower() == 'y':
-        with open("PMS/logs.txt", "w", encoding="utf8") as file:
+        with open("MS/logs.txt", "w", encoding="utf8") as file:
             file.write("")
             file.write(f"Logs have been reseted by {username}.\n")
         print("System logs have been reset.")
@@ -103,7 +103,7 @@ def add_or_remove_product():
 
     products = {}
     try:
-        with open("PMS/products.txt", "r", encoding="utf8") as file:
+        with open("MS/products.txt", "r", encoding="utf8") as file:
             for line in file:
                 line = line.strip()
                 if not line:
@@ -114,7 +114,7 @@ def add_or_remove_product():
                 except ValueError:
                     continue
     except FileNotFoundError:
-        open("PMS/products.txt", "w", encoding="utf8").close()
+        open("MS/products.txt", "w", encoding="utf8").close()
 
     current_stock = products.get(product_name, 0)
     new_stock = current_stock + change
@@ -128,7 +128,7 @@ def add_or_remove_product():
         
     products[product_name] = new_stock
     
-    with open("PMS/products.txt", "w", encoding="utf8") as file:
+    with open("MS/products.txt", "w", encoding="utf8") as file:
         for name, quantity in products.items():
             if quantity > 0:
                 file.write(f"{name}-{quantity}\n")
@@ -148,7 +148,7 @@ def list_products():
     clear_terminal()
     print("\n--- Product List ---")
     try:
-        with open("PMS/Products.txt", "r", encoding="utf8") as file:
+        with open("MS/Products.txt", "r", encoding="utf8") as file:
             products = file.readlines()
             if not products:
                 print("No products found.")
@@ -173,7 +173,7 @@ def add_new_user():
         print("Error: Password cannot contain punctuation marks.")
         return
 
-    with open("PMS/users.txt", "r", encoding="utf8") as file:
+    with open("MS/users.txt", "r", encoding="utf8") as file:
         for line in file:
             existing_username = line.strip().split("-")[0]
             if username == existing_username:
@@ -181,7 +181,7 @@ def add_new_user():
                 print(f"User '{username}' already exists. Please choose a different username.")
                 return
 
-    with open("PMS/users.txt", "a", encoding="utf8") as file:
+    with open("MS/users.txt", "a", encoding="utf8") as file:
         file.write(f"{username}-{password}\n")
     print(f"User '{username}' was added successfully.")
 
@@ -190,7 +190,7 @@ def list_users():
     clear_terminal()
     print("\n--- User List ---")
     try:
-        with open("PMS/users.txt", "r", encoding="utf8") as file:
+        with open("MS/users.txt", "r", encoding="utf8") as file:
             users = file.readlines()
             if not users:
                 print("No users found.")
@@ -203,11 +203,11 @@ def list_users():
 def remove_users():
     username_to_remove = input("Enter the username of the user to remove: ")
     try:
-        with open("PMS/users.txt", "r", encoding="utf8") as file:
+        with open("MS/users.txt", "r", encoding="utf8") as file:
             users = file.readlines()
         
         user_found = False
-        with open("PMS/users.txt", "w", encoding="utf8") as file:
+        with open("MS/users.txt", "w", encoding="utf8") as file:
             for user in users:
                 if user.strip().split("-")[0] != username_to_remove:
                     file.write(user)
@@ -234,14 +234,14 @@ def add_new_admin():
         return
 
     # Check if admin already exists
-    with open("PMS/admins.txt", "r", encoding="utf8") as file:
+    with open("MS/admins.txt", "r", encoding="utf8") as file:
         for line in file:
             existing_admin = line.strip().split("-")[0]
             if admin_name == existing_admin:
                 print(f"Admin '{admin_name}' already exists. Please choose a different username.")
                 return
 
-    with open("PMS/admins.txt", "a", encoding="utf8") as file:
+    with open("MS/admins.txt", "a", encoding="utf8") as file:
         file.write(f"{admin_name}-{admin_password}\n")
     print(f"Admin '{admin_name}' added successfully.")
 
@@ -249,7 +249,7 @@ def add_new_admin():
 def list_admins():
     print("\n--- Admin List ---")
     try:
-        with open("PMS/admins.txt", "r", encoding="utf8") as file:
+        with open("MS/admins.txt", "r", encoding="utf8") as file:
             admins = file.readlines()
             if not admins:
                 print("No admins found.")
@@ -262,11 +262,11 @@ def list_admins():
 def remove_admin():
     admin_to_remove = input("Enter the username of the admin to remove: ")
     try:
-        with open("PMS/admins.txt", "r", encoding="utf8") as file:
+        with open("MS/admins.txt", "r", encoding="utf8") as file:
             admins = file.readlines()
             
         admin_found = False
-        with open("PMS/admins.txt", "w", encoding="utf8") as file:
+        with open("MS/admins.txt", "w", encoding="utf8") as file:
             for admin in admins:
                 if admin.strip().split("-")[0] != admin_to_remove:
                     file.write(admin)

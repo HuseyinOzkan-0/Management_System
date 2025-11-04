@@ -1,6 +1,6 @@
 import functions #Importing functions module
 import os #To handle file paths and directories
-os.makedirs("PMS", exist_ok=True) #Check PMS directory exists
+os.makedirs("MS", exist_ok=True) #Check MS directory exists
 
 while True:
     choice = functions.main_menu() #Main Menu
