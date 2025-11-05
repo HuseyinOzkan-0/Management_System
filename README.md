@@ -48,3 +48,5 @@ To run the Management System, execute the following command from the root projec
 
 ```bash
 python main.py
+
+basic admin: kadir-123
