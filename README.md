@@ -22,11 +22,11 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/HuseyinOzkan-0/Management_System.git](https://github.com/HuseyinOzkan-0/Management_System.git)
+    git clone https://github.com/HuseyinOzkan-0/Management_System.git
     ```
 2.  Navigate to the project directory:
     ```bash
-    cd Management_System
+    cd ../Management_System
     ```
 
 ### 2. Configuration
