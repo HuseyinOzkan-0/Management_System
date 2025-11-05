@@ -26,7 +26,7 @@ Follow these instructions to get a copy of the project up and running on your lo
     ```
 2.  Navigate to the project directory:
     ```bash
-    cd ../Management_System
+    cd .../../Management_System
     ```
 
 ### 2. Configuration
